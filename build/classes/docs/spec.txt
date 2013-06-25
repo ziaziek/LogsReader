@@ -1,0 +1,7 @@
+Initially we assume that the format of the log files is as follows (from the project that this is supposed to serve):
+[%-4r] [%d{ISO8601}] [%t] [%c] [%l] [%-5p] [%m]%n, which means:
+[time] [date] [thread] [className] [source] [level] [message] newLine
+
+
+Application will give the user opportunity to change (match) the columns from the specified log file
+to columns that are available in the LogsReader.
