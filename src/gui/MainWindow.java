@@ -4,7 +4,7 @@
  */
 package gui;
 
-import forms.BaseForm;
+import gubas.forms.BaseForm;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.JPanel;
@@ -32,22 +32,27 @@ public class MainWindow extends BaseForm{
         this.setPreferredSize(minStartDim);
         this.setMinimumSize(minStartDim);
         add(new MenuBar(this), BorderLayout.NORTH);
-        //add(createTablePanel(), BorderLayout.CENTER);
+        add(createTablePanel(), BorderLayout.CENTER);
         add(createMessagePanel(), BorderLayout.SOUTH);
     }
     
     protected JPanel createTablePanel(){
+        Dimension tableDim = new Dimension(1030, 350);
         JPanel logPanel = new JPanel();
-        logTable = new JTable(null, GeneralData.Columns);
+        logTable = new JTable(new Object[][]{{0,0,0,0,0,0,0}}, GeneralData.Columns);
+        logTable.setFillsViewportHeight(true);
+        //logTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        logTable.setPreferredSize(tableDim);
         JScrollPane logPane = new JScrollPane(logTable);
+        logPane.setPreferredSize(tableDim);
         logPanel.add(logPane);
-        logPanel.setOpaque(true);
+        logPanel.setOpaque(false);
         return logPanel;
     }
     
     protected JPanel createMessagePanel(){
         msgPanel = new JPanel();
-        msgArea = new JTextArea(18, 94);
+        msgArea = new JTextArea(15, 94);
         JScrollPane msgAreaScroll = new JScrollPane(msgArea);
         msgPanel.add(msgAreaScroll);
         msgPanel.setOpaque(false);
