@@ -23,7 +23,7 @@ public class LogEntry {
     
     public static String logEntryElementEndMarkerRegExp = "\\]";
     
-    public static String[] Columns = new String[]{"Time from start", "Date", "Thread name", "Class Name", "Source", "Level", "Message"};
+    public static String[] Columns = GeneralData.Columns;
     
     /**
      * Map of indices of Columns vs indices of the provided array in the LogEntry constructor. <index in the Columns>, <index in the provided array>
@@ -36,7 +36,39 @@ public class LogEntry {
                                                                  put(5,5);
                                                                  put(6,6);}};
     
-    protected String time, date, thread, className, sourceName, level, message, description;
+    protected String time="", date="", thread="", className="", sourceName="", level="", message="", description="";
+
+    public String getTime() {
+        return time;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getThread() {
+        return thread;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public String getSourceName() {
+        return sourceName;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 
     public void setDescription(String message) {
         if(message!=null){
@@ -50,7 +82,7 @@ public class LogEntry {
            Integer.parseInt(head[mapping.get(0)]);
            time = head[mapping.get(0)];  
              } catch(NumberFormatException ex){
-                 time = null;
+                 time = "";
                  return;
              }
          }

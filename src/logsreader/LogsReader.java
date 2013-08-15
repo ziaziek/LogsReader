@@ -4,6 +4,7 @@
  */
 package logsreader;
 
+import gubas.components.TableComponent;
 import gui.MainWindow;
 import gubas.javaapplication1.FormsCaller;
 import java.io.*;
@@ -16,6 +17,7 @@ import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import misc.GeneralData;
 import misc.LogEntry;
 
 /**
@@ -30,8 +32,27 @@ public class LogsReader {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-            Queue d = readData(LogsReader.class.getResource("../tests/test.txt").getFile(), 23);
-            //FormsCaller.callNewWindow("LogReader", new MainWindow());
+            //Queue d = readData(LogsReader.class.getResource("../tests/test.txt").getFile(), 23);
+        MainWindow mw = new MainWindow();
+            FormsCaller.callNewWindow("LogReader", mw);
+    }
+    
+    
+    public static String[][] getInformationArray(Queue<LogEntry> data){
+        //prepare basic array of information
+        String[][] infos = new String[data.size()][LogEntry.Columns.length];
+        int i=0;
+        for(LogEntry lg: data){
+            infos[i][GeneralData.ColumnsIndices.TimeFromStart.ordinal()]=lg.getTime();
+            infos[i][GeneralData.ColumnsIndices.Date.ordinal()] = lg.getDate();
+            infos[i][GeneralData.ColumnsIndices.ThreadName.ordinal()] = lg.getThread();
+            infos[i][GeneralData.ColumnsIndices.ClassName.ordinal()] = lg.getClassName();
+            infos[i][GeneralData.ColumnsIndices.Level.ordinal()] = lg.getLevel();
+            infos[i][GeneralData.ColumnsIndices.Source.ordinal()] = lg.getSourceName();
+            infos[i][GeneralData.ColumnsIndices.Message.ordinal()] = lg.getMessage();
+            i++;
+        }
+       return infos;
     }
     
     public static Queue readData(String fileName, int capacity){

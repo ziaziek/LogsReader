@@ -4,6 +4,7 @@
  */
 package gui;
 
+import gubas.components.TableComponent;
 import gubas.forms.BaseForm;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -11,8 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.table.DefaultTableModel;
 import misc.GeneralData;
-
+import logsreader.LogsReader;
 /**
  *
  * @author Przemek
@@ -21,7 +23,7 @@ public class MainWindow extends BaseForm{
     
     JPanel msgPanel = null;
     
-    JTable logTable = null;
+    TableComponent logTable = null;
     
     JTextArea msgArea = null;
     
@@ -36,16 +38,19 @@ public class MainWindow extends BaseForm{
         add(createMessagePanel(), BorderLayout.SOUTH);
     }
     
+    public MainWindow(DefaultTableModel dataModel){
+        this();
+        logTable.getTable().setModel(dataModel);
+    }
+    
     protected JPanel createTablePanel(){
         Dimension tableDim = new Dimension(1030, 350);
         JPanel logPanel = new JPanel();
-        logTable = new JTable(new Object[][]{{0,0,0,0,0,0,0}}, GeneralData.Columns);
-        logTable.setFillsViewportHeight(true);
+        logTable = new TableComponent(LogsReader.getInformationArray(LogsReader.readData(LogsReader.class.getResource("../tests/test.txt").getFile(), 23)), GeneralData.Columns);
         //logTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        logTable.setPreferredSize(tableDim);
-        JScrollPane logPane = new JScrollPane(logTable);
-        logPane.setPreferredSize(tableDim);
-        logPanel.add(logPane);
+        //logTable.setPreferredSize(tableDim);
+        logTable.setSize(tableDim);
+        logPanel.add(logTable);
         logPanel.setOpaque(false);
         return logPanel;
     }
