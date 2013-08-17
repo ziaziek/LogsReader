@@ -36,8 +36,20 @@ public class LogEntry {
                                                                  put(5,5);
                                                                  put(6,6);}};
     
+    private static int NextID = 1;
+
+    public static int getNextID() {
+        return NextID;
+    }
+    
     protected String time="", date="", thread="", className="", sourceName="", level="", message="", description="";
 
+    protected int id;
+
+    public int getId() {
+        return id;
+    }
+    
     public String getTime() {
         return time;
     }
@@ -104,6 +116,8 @@ public class LogEntry {
          if(head.length>6){
              message=head[mapping.get(6)];
          }
+         id = NextID;
+         NextID++;
      }
 
      

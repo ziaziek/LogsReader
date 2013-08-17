@@ -26,8 +26,41 @@ import misc.LogEntry;
  */
 public class LogsReader {
 
+    protected Queue messages;
+
+    public Queue getMessages() {
+        return messages;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+    
+    protected int capacity = 25;
     
     
+    protected DisplayableMessageRenderer messageTextRenderer = new DisplayableMessageRenderer();
+
+    public DisplayableMessageRenderer getMessageTextRenderer() {
+        return messageTextRenderer;
+    }
+
+    public void setmRenderer(DisplayableMessageRenderer mRenderer) {
+        this.messageTextRenderer = mRenderer;
+    }
+    
+    public LogsReader(String logFileLocation){
+        messages = readData(logFileLocation, capacity);
+    }
+    
+    public LogsReader(String logFileLocation, int cap){
+        capacity = cap;
+        messages =readData(logFileLocation, cap);
+    }
     /**
      * @param args the command line arguments
      */
@@ -43,6 +76,7 @@ public class LogsReader {
         String[][] infos = new String[data.size()][LogEntry.Columns.length];
         int i=0;
         for(LogEntry lg: data){
+            infos[i][GeneralData.ColumnsIndices.ID.ordinal()] = String.valueOf(lg.getId());
             infos[i][GeneralData.ColumnsIndices.TimeFromStart.ordinal()]=lg.getTime();
             infos[i][GeneralData.ColumnsIndices.Date.ordinal()] = lg.getDate();
             infos[i][GeneralData.ColumnsIndices.ThreadName.ordinal()] = lg.getThread();
@@ -55,7 +89,7 @@ public class LogsReader {
        return infos;
     }
     
-    public static Queue readData(String fileName, int capacity){
+    public Queue readData(String fileName, int capacity){
         Queue<LogEntry> ret = new ArrayBlockingQueue(capacity);
         File f = new File(fileName);
         try {
@@ -79,8 +113,9 @@ public class LogsReader {
                         restOfEntry = new StringBuilder();
                         l=l.replaceAll(LogEntry.logEntryElementStartMarkerRegExp, "");
                         entry = new LogEntry(l.split(LogEntry.logEntryElementEndMarkerRegExp));
-                        ret.offer(entry);
-                        
+                        if(entry.getId()==LogEntry.getNextID()-1 && entry.getId()>0){
+                          ret.offer(entry);  
+                        }
                     } else {
                         if(entry != null){
                           restOfEntry.append(l);  
