@@ -12,6 +12,8 @@ import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Iterator;
+import java.util.Queue;
+import java.util.concurrent.ArrayBlockingQueue;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -21,6 +23,7 @@ import javax.swing.table.TableModel;
 import misc.GeneralData;
 import logsreader.LogsReader;
 import misc.LogEntry;
+import misc.LogEntryFilter;
 /**
  *
  * @author Przemek
@@ -75,6 +78,11 @@ public class MainWindow extends BaseForm implements MouseListener{
         return msgPanel;
     }
 
+    public void callFilter(String filterLevel){
+        String[][] rr = LogsReader.getInformationArray(new LogEntryFilter(filterLevel).getFilteredQueue(r.getMessages()));
+        logTable.getTable().setModel(new DefaultTableModel(rr, LogEntry.Columns));
+    }
+    
     @Override
     public void mouseClicked(MouseEvent e) {
           if(logTable!=null && r !=null){

@@ -40,7 +40,7 @@ public class LogsReader {
         this.capacity = capacity;
     }
     
-    protected int capacity = 25;
+    protected int capacity = 100;
     
     
     protected DisplayableMessageRenderer messageTextRenderer = new DisplayableMessageRenderer();

@@ -9,7 +9,7 @@ package misc;
  * @author Przemek
  */
 public class GeneralData {
-    public static String[] Levels = new String[]{"Trace", "Debug", "Info", "Warn", "Error", "Fatal"};
+    public static String[] Levels = new String[]{"TRACE", "DEBUG", "INFO", "WARN", "ERROR", "FATAL"};
     
     public static String[] Columns = new String[]{"Id", "Time from start", "Date", "Thread name", "Class Name", "Source", "Level", "Message"};
     

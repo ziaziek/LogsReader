@@ -19,7 +19,7 @@ import misc.GeneralData;
 public class MenuBar extends JMenuBar {
     
     
-    JFrame parentFrame = null;
+    MainWindow parentFrame = null;
     JTextField txtLogSize = null;
     JLabel lblLogSize = null;
     
@@ -31,7 +31,7 @@ public class MenuBar extends JMenuBar {
         return curLvl;
     }
     
-    public MenuBar(JFrame parentFrame){
+    public MenuBar(MainWindow parentFrame){
         this.parentFrame = parentFrame;
         setLayout(new BorderLayout());
         add(createLogSizeTxtField(), BorderLayout.EAST);  
@@ -115,6 +115,7 @@ public class MenuBar extends JMenuBar {
         public void actionPerformed(ActionEvent e) {
             if(e.getSource() instanceof JRadioButtonMenuItem && e.getActionCommand().equals(MenuBar.lvlChngCommand)){
               curLvl=((JRadioButtonMenuItem)e.getSource()).getText();
+              parentFrame.callFilter(curLvl);
             }
              
         }
