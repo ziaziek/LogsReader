@@ -11,6 +11,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.util.Iterator;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -44,7 +45,7 @@ public class MainWindow extends BaseForm implements MouseListener{
         super();
         this.setPreferredSize(minStartDim);
         this.setMinimumSize(minStartDim);
-        r = new LogsReader(LogsReader.class.getResource("../tests/test.txt").getFile());
+        r = new LogsReader("C:/test.txt");//LogsReader.class.getResource("../tests/test.txt").getFile());
         add(new MenuBar(this), BorderLayout.NORTH);
         add(createTablePanel(), BorderLayout.CENTER);
         add(createMessagePanel(), BorderLayout.SOUTH);
@@ -62,6 +63,7 @@ public class MainWindow extends BaseForm implements MouseListener{
         logTable = new TableComponent(LogsReader.getInformationArray(r.getMessages()), GeneralData.Columns);
         logTable.getTable().setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
         logTable.getTable().addMouseListener(this);
+        //TODO: make sure that the newTable Model has got the same column names as the previous one!
         logTable.getTable().setModel(new NonEditableTableModel(logTable.getTable().getModel()));
         logTable.setSize(tableDim);
         logPanel.add(logTable);
