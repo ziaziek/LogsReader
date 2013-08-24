@@ -11,10 +11,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
 import java.util.Iterator;
-import java.util.Queue;
-import java.util.concurrent.ArrayBlockingQueue;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -60,11 +57,10 @@ public class MainWindow extends BaseForm implements MouseListener{
     protected JPanel createTablePanel(){
         Dimension tableDim = new Dimension(1030, 350);
         JPanel logPanel = new JPanel();
-        logTable = new TableComponent(LogsReader.getInformationArray(r.getMessages()), GeneralData.Columns);
+        DefaultTableModel modelT = new NonEditableTableModel(LogsReader.getInformationArray(r.getMessages()), GeneralData.Columns);
+        logTable = new TableComponent(modelT);
         logTable.getTable().setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
         logTable.getTable().addMouseListener(this);
-        //TODO: make sure that the newTable Model has got the same column names as the previous one!
-        logTable.getTable().setModel(new NonEditableTableModel(logTable.getTable().getModel()));
         logTable.setSize(tableDim);
         logPanel.add(logTable);
         logPanel.setOpaque(false);
@@ -82,7 +78,9 @@ public class MainWindow extends BaseForm implements MouseListener{
 
     public void callFilter(String filterLevel){
         String[][] rr = LogsReader.getInformationArray(new LogEntryFilter(filterLevel).getFilteredQueue(r.getMessages()));
-        logTable.getTable().setModel(new DefaultTableModel(rr, LogEntry.Columns));
+        TableModel modelT = logTable.getTable().getModel();
+        ((DefaultTableModel)modelT).setDataVector(rr, LogEntry.Columns);
+        ((DefaultTableModel)modelT).fireTableDataChanged();
     }
     
     @Override
