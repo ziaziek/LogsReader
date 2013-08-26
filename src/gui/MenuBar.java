@@ -5,6 +5,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,12 +17,13 @@ import misc.GeneralData;
  *
  * @author Przemek
  */
-public class MenuBar extends JMenuBar {
+public class MenuBar extends JPanel {
     
-    
+    JMenuBar menuBar = null;
     MainWindow parentFrame = null;
     JTextField txtLogSize = null;
     JLabel lblLogSize = null;
+    JPanel spacer = new JPanel();
     
     protected final static String lvlChngCommand = "Level Changed";
     
@@ -33,11 +35,30 @@ public class MenuBar extends JMenuBar {
     
     public MenuBar(MainWindow parentFrame){
         this.parentFrame = parentFrame;
+        menuBar = new JMenuBar();
         setLayout(new BorderLayout());
+        menuBar.add(createMenuFile());
+        menuBar.add(createEditMenu());
+        add(menuBar, BorderLayout.LINE_START);
         add(createLogSizeTxtField(), BorderLayout.EAST);  
-        add(createMenuFile(), BorderLayout.LINE_START);
-        add(createEditMenu());
-        setPreferredSize(new Dimension(50, 30));
+        
+        setPreferredSize(new Dimension(parentFrame.getWidth(), 30));
+        
+    }
+    
+    
+    @Override
+    public void setPreferredSize(Dimension d){
+        super.setPreferredSize(d);
+        int w=0;
+        for(Component c :this.getComponents()){
+            if (c !=spacer)
+                w+=c.getWidth();
+        }
+        if(parentFrame!=null){
+            spacer.setPreferredSize(new Dimension(parentFrame.getWidth()-3*w,
+                    (int) d.getHeight()));
+        }
     }
     
     protected JPanel createLogSizeTxtField(){
@@ -45,6 +66,7 @@ public class MenuBar extends JMenuBar {
         lblLogSize = new JLabel("Log size: ");
         txtLogSize = new JTextField();
         txtLogSize.setPreferredSize(new Dimension(100, 20));
+        txtLogSize.addActionListener(new TextFieldActionListener());
         pnl.add(lblLogSize);
         pnl.add(txtLogSize);
         return pnl;
@@ -107,6 +129,17 @@ public class MenuBar extends JMenuBar {
         }
         me.add(logLvl);
         return me;
+    }
+    
+    protected class TextFieldActionListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            if(ae.getSource()==txtLogSize){
+                parentFrame.resetLogsQueueLength(Integer.parseInt(txtLogSize.getText()));
+            }
+        }
+        
     }
     
     protected class RadioButtonLevelActionListener implements ActionListener{

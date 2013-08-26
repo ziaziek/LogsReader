@@ -38,11 +38,13 @@ public class MainWindow extends BaseForm implements MouseListener{
     
     LogsReader r;
     
+    String fileLocation = "C:/test.txt";
+    
     public MainWindow(){
         super();
         this.setPreferredSize(minStartDim);
         this.setMinimumSize(minStartDim);
-        r = new LogsReader("C:/test.txt");//LogsReader.class.getResource("../tests/test.txt").getFile());
+        r = new LogsReader(fileLocation);//LogsReader.class.getResource("../tests/test.txt").getFile());
         add(new MenuBar(this), BorderLayout.NORTH);
         add(createTablePanel(), BorderLayout.CENTER);
         add(createMessagePanel(), BorderLayout.SOUTH);
@@ -78,8 +80,17 @@ public class MainWindow extends BaseForm implements MouseListener{
 
     public void callFilter(String filterLevel){
         String[][] rr = LogsReader.getInformationArray(new LogEntryFilter(filterLevel).getFilteredQueue(r.getMessages()));
+        refreshTableData(rr, LogEntry.Columns);
+    }
+    
+    public void resetLogsQueueLength(int capacity){
+        r = new LogsReader(fileLocation, capacity);
+        refreshTableData(LogsReader.getInformationArray(r.getMessages()), LogEntry.Columns);
+    }
+    
+    private void refreshTableData(String[][] data, String[] cols){
         TableModel modelT = logTable.getTable().getModel();
-        ((DefaultTableModel)modelT).setDataVector(rr, LogEntry.Columns);
+        ((DefaultTableModel)modelT).setDataVector(data, cols);
         ((DefaultTableModel)modelT).fireTableDataChanged();
     }
     
