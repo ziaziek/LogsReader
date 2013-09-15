@@ -82,11 +82,13 @@ public class MenuBar extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO: implement opening a file
-                JDialog d = new JDialog();
-                d.add(new JLabel("XXX"));
-                d.setVisible(true);
+                JFileChooser fc = new JFileChooser();
+                if(fc.showOpenDialog(menuBar) == JFileChooser.APPROVE_OPTION){
+                  parentFrame.loadData(fc.getSelectedFile().getAbsolutePath());  
+                }
             }
         });
+        
         mf.add(fileOpen);
         JMenuItem exit = new JMenuItem("Exit");
         exit.setMnemonic(KeyEvent.VK_X);
