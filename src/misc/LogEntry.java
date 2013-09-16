@@ -34,7 +34,8 @@ public class LogEntry {
                                                                  put(3,3);
                                                                  put(4,4);
                                                                  put(5,5);
-                                                                 put(6,6);}};
+                                                                 put(6,6);
+                                                                 put(7,7);}};
     
     private static int NextID = 1;
 
@@ -85,6 +86,24 @@ public class LogEntry {
     public void setDescription(String message) {
         if(message!=null){
            this.description = message; 
+        }
+    }
+    
+    /**
+     * Change the mapping of the fields in the log entry class, used by the reader to put information into specific columns of data
+     * @param newMapping Vector containing values to put in the plaves instead of the old ones. If a value is less than 0, it 
+     * does not replace the old one.
+     * @throws Exception 
+     */
+    public static void rebuildMapping(Integer[] newMapping) throws Exception{
+        if(newMapping.length!=mapping.size()){
+            throw new Exception("Values vector for mapping incorrect. Check the length of the vector.");
+        }
+        for(int i = 0; i< mapping.size(); i++){
+            if(mapping.containsKey(i) && newMapping[i]>=0){
+                mapping.remove(i);
+                mapping.put(i, newMapping[i]);
+            }         
         }
     }
     

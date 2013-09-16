@@ -4,6 +4,7 @@
  */
 package gui;
 
+import gubas.forms.Dialog;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -115,7 +116,9 @@ public class MenuBar extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO: Open a new window to select items from the specified file to match the ones available in here
-                throw new UnsupportedOperationException("Not supported yet.");
+                PatternsWindow pat = new PatternsWindow(Dialog.OK, "Set the pattern for the log files.");
+                pat.setCaller(parentFrame);
+                pat.setVisible(true);
             }
         });
         me.add(patternEdit);

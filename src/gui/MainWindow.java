@@ -37,6 +37,10 @@ public class MainWindow extends BaseForm implements MouseListener{
     Dimension minStartDim = new Dimension(1064, 728);
     
     LogsReader r;
+
+    public LogsReader getR() {
+        return r;
+    }
     
     String fileLocation = "C:/test.txt";
     
@@ -92,6 +96,7 @@ public class MainWindow extends BaseForm implements MouseListener{
         r = new LogsReader(fileLocation, capacity);
         refreshTableData(LogsReader.getInformationArray(r.getMessages()), LogEntry.Columns);
     }
+    
     
     private void refreshTableData(String[][] data, String[] cols){
         TableModel modelT = logTable.getTable().getModel();

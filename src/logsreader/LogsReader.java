@@ -4,15 +4,9 @@
  */
 package logsreader;
 
-import gubas.components.TableComponent;
 import gui.MainWindow;
 import gubas.javaapplication1.FormsCaller;
 import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.logging.Level;
