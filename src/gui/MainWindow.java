@@ -56,6 +56,11 @@ public class MainWindow extends BaseForm implements MouseListener{
         logTable.getTable().setModel(dataModel);
     }
     
+    public void loadData(String fileLocation){
+        r = new LogsReader(fileLocation);
+        refreshTableData(LogsReader.getInformationArray(r.getMessages()), LogEntry.Columns);
+    }
+    
     protected JPanel createTablePanel(){
         Dimension tableDim = new Dimension(1030, 350);
         JPanel logPanel = new JPanel();
