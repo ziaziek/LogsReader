@@ -7,12 +7,14 @@ package logsreader;
 import gui.MainWindow;
 import gubas.javaapplication1.FormsCaller;
 import java.io.*;
+import java.util.Iterator;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import misc.GeneralData;
 import misc.LogEntry;
+import misc.LogEntryFilter;
 
 /**
  *
@@ -85,8 +87,8 @@ public class LogsReader {
     
     public Queue readData(String fileName, int capacity){
         Queue<LogEntry> ret = new ArrayBlockingQueue(capacity);
-        File f = new File(fileName);
         try {
+            File f = new File(fileName);
             BufferedReader reader = new BufferedReader(new FileReader(f));
             //List<String> entry = new ArrayList<>();
             StringBuilder restOfEntry = new StringBuilder();
@@ -116,9 +118,23 @@ public class LogsReader {
                         }                     
                     }    
                 }
+        } catch(FileNotFoundException ex){
+            Logger.getLogger(LogsReader.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(LogsReader.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ret;
+    }
+    
+    public double[] calculateStatistics(){
+        int l = GeneralData.Levels.length;
+        double[] d = new double[l];
+        if(messages!=null && messages.size()>0){
+            for(int i=0; i<l; i++){
+                LogEntryFilter f = new LogEntryFilter(GeneralData.Levels[i]);
+                d[i]=f.getFilteredQueue(messages).size();
+            }
+        }
+        return d;
     }
 }
