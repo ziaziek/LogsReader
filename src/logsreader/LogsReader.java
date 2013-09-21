@@ -67,22 +67,26 @@ public class LogsReader {
     }
     
     
-    public static String[][] getInformationArray(Queue<LogEntry> data){
+    public static String[][] getInformationArray(Queue<LogEntry> data) {
         //prepare basic array of information
-        String[][] infos = new String[data.size()][LogEntry.Columns.length];
-        int i=0;
-        for(LogEntry lg: data){
-            infos[i][GeneralData.ColumnsIndices.ID.ordinal()] = String.valueOf(lg.getId());
-            infos[i][GeneralData.ColumnsIndices.TimeFromStart.ordinal()]=lg.getTime();
-            infos[i][GeneralData.ColumnsIndices.Date.ordinal()] = lg.getDate();
-            infos[i][GeneralData.ColumnsIndices.ThreadName.ordinal()] = lg.getThread();
-            infos[i][GeneralData.ColumnsIndices.ClassName.ordinal()] = lg.getClassName();
-            infos[i][GeneralData.ColumnsIndices.Level.ordinal()] = lg.getLevel();
-            infos[i][GeneralData.ColumnsIndices.Source.ordinal()] = lg.getSourceName();
-            infos[i][GeneralData.ColumnsIndices.Message.ordinal()] = lg.getMessage();
-            i++;
+        String[][] infos = new String[1][LogEntry.Columns.length];
+        int i = 0;
+        if (data != null) {
+            infos = new String[data.size()][LogEntry.Columns.length];
+            for (LogEntry lg : data) {
+                infos[i][GeneralData.ColumnsIndices.ID.ordinal()] = String.valueOf(lg.getId());
+                infos[i][GeneralData.ColumnsIndices.TimeFromStart.ordinal()] = lg.getTime();
+                infos[i][GeneralData.ColumnsIndices.Date.ordinal()] = lg.getDate();
+                infos[i][GeneralData.ColumnsIndices.ThreadName.ordinal()] = lg.getThread();
+                infos[i][GeneralData.ColumnsIndices.ClassName.ordinal()] = lg.getClassName();
+                infos[i][GeneralData.ColumnsIndices.Level.ordinal()] = lg.getLevel();
+                infos[i][GeneralData.ColumnsIndices.Source.ordinal()] = lg.getSourceName();
+                infos[i][GeneralData.ColumnsIndices.Message.ordinal()] = lg.getMessage();
+                i++;
+            }
         }
-       return infos;
+
+        return infos;
     }
     
     public Queue readData(String fileName, int capacity){

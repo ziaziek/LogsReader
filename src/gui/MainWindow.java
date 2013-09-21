@@ -12,7 +12,10 @@ import gubas.forms.BaseForm;
 import gubas.images.Images;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Iterator;
@@ -41,6 +44,8 @@ public class MainWindow extends BaseForm implements MouseListener{
     
     JPanel msgPanel = null;
     
+    JPanel graphPanel = null;
+    
     TableComponent logTable = null;
     
     JTextArea msgArea = null;
@@ -50,6 +55,10 @@ public class MainWindow extends BaseForm implements MouseListener{
     LogsReader r;
 
     ChartPanel chp = null;
+    
+    TabbedPanelComponent tabPanel = null;
+    
+    JPanel tablePanel = null;
     
     public LogsReader getR() {
         return r;
@@ -64,7 +73,7 @@ public class MainWindow extends BaseForm implements MouseListener{
         r = new LogsReader(fileLocation);//LogsReader.class.getResource("../tests/test.txt").getFile());
         add(new MenuBar(this), BorderLayout.NORTH);
         add(createTabPanel(), BorderLayout.CENTER);
-        
+        this.setResizable(false);
     }
     
     public MainWindow(DefaultTableModel dataModel){
@@ -80,25 +89,25 @@ public class MainWindow extends BaseForm implements MouseListener{
     
     
     protected TabbedPanelComponent createTabPanel(){
-        TabbedPanelComponent ret = new TabbedPanelComponent();
-        ret.addTab("Log Table", createTablePanel());
-        ret.addTab("Graphs", createGraphsPanel());
-        return ret;
+        tabPanel = new TabbedPanelComponent();
+        tabPanel.addTab("Log Table", createTablePanel());
+        tabPanel.addTab("Graphs", createGraphsPanel());
+        return tabPanel;
     }
     
     protected JPanel createGraphsPanel(){
-        JPanel ret = new JPanel();
-        ret.setPreferredSize(new Dimension(1030,350));      
+        graphPanel = new JPanel();
+        graphPanel.setPreferredSize(new Dimension(1030,350));      
         chp = new ChartPanel(ChartFactory.createBarChart("Graph", "Level", "Frequency", prepareGraphData(), PlotOrientation.HORIZONTAL, false, false, false));
         chp.setPreferredSize(new Dimension(1030,530));
         chp.getChart().getPlot().setBackgroundImage(Images.getImageIcon(Images.BlueGradientBackground).getImage());
-        ret.add(chp);
-        ret.setOpaque(true);
-        return ret;
+        graphPanel.add(chp);
+        graphPanel.setOpaque(true);
+        return graphPanel;
     }
     
     protected JPanel createTablePanel(){
-        JPanel ret = new JPanel(new BorderLayout());
+        tablePanel = new JPanel(new BorderLayout());
         Dimension tableDim = new Dimension(1030, 350);
         JPanel logPanel = new JPanel();
         DefaultTableModel modelT = new NonEditableTableModel(LogsReader.getInformationArray(r.getMessages()), GeneralData.Columns);
@@ -108,9 +117,9 @@ public class MainWindow extends BaseForm implements MouseListener{
         logTable.setSize(tableDim);
         logPanel.add(logTable);
         logPanel.setOpaque(false);
-        ret.add(logPanel, BorderLayout.CENTER);
-        ret.add(createMessagePanel(), BorderLayout.SOUTH);
-        return ret;
+        tablePanel.add(logPanel, BorderLayout.CENTER);
+        tablePanel.add(createMessagePanel(), BorderLayout.SOUTH);
+        return tablePanel;
     }
     
     protected JPanel createMessagePanel(){
@@ -152,12 +161,12 @@ public class MainWindow extends BaseForm implements MouseListener{
                 }
             } 
         } catch(IllegalArgumentException ex){
-            System.out.println("Graph Series too short.");
             System.err.println(ex.getMessage());
         }
         return ds;
     }
     
+
     @Override
     public void mouseClicked(MouseEvent e) {
           if(logTable!=null && r !=null){
