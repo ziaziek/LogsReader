@@ -61,7 +61,6 @@ public class LogsReader {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-            //Queue d = readData(LogsReader.class.getResource("../tests/test.txt").getFile(), 23);
         MainWindow mw = new MainWindow();
             FormsCaller.callNewWindow("LogReader", mw);
     }

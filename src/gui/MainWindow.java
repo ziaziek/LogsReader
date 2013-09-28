@@ -4,18 +4,13 @@
  */
 package gui;
 
-import gubas.components.GubasChart;
 import gubas.components.NonEditableTableModel;
 import gubas.components.TabbedPanelComponent;
 import gubas.components.TableComponent;
 import gubas.forms.BaseForm;
 import gubas.images.Images;
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Iterator;
@@ -34,7 +29,6 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.category.CategoryDataset;
-import org.jfree.util.Log;
 
 /**
  *
@@ -72,13 +66,8 @@ public class MainWindow extends BaseForm implements MouseListener{
         this.setMinimumSize(minStartDim);
         r = new LogsReader(fileLocation);//LogsReader.class.getResource("../tests/test.txt").getFile());
         add(new MenuBar(this), BorderLayout.NORTH);
-        add(createTabPanel(), BorderLayout.CENTER);
+        add(getTabPanel(), BorderLayout.CENTER);
         this.setResizable(false);
-    }
-    
-    public MainWindow(DefaultTableModel dataModel){
-        this();
-        logTable.getTable().setModel(dataModel);
     }
     
     public void loadData(String fileLocation){
@@ -88,10 +77,12 @@ public class MainWindow extends BaseForm implements MouseListener{
     }
     
     
-    protected TabbedPanelComponent createTabPanel(){
-        tabPanel = new TabbedPanelComponent();
-        tabPanel.addTab("Log Table", createTablePanel());
+    protected TabbedPanelComponent getTabPanel(){
+        if(tabPanel==null){
+            tabPanel = new TabbedPanelComponent();
+        tabPanel.addTab("Log Table", getTablePanel());
         tabPanel.addTab("Graphs", createGraphsPanel());
+        }
         return tabPanel;
     }
     
@@ -106,25 +97,29 @@ public class MainWindow extends BaseForm implements MouseListener{
         return graphPanel;
     }
     
-    protected JPanel createTablePanel(){
-        tablePanel = new JPanel(new BorderLayout());
-        Dimension tableDim = new Dimension(1030, 350);
-        JPanel logPanel = new JPanel();
-        DefaultTableModel modelT = new NonEditableTableModel(LogsReader.getInformationArray(r.getMessages()), GeneralData.Columns);
-        logTable = new TableComponent(modelT);
-        logTable.getTable().setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
-        logTable.getTable().addMouseListener(this);
-        logTable.setSize(tableDim);
-        logPanel.add(logTable);
-        logPanel.setOpaque(false);
-        tablePanel.add(logPanel, BorderLayout.CENTER);
-        tablePanel.add(createMessagePanel(), BorderLayout.SOUTH);
+    protected JPanel getTablePanel(){
+        if (tablePanel == null) {
+            tablePanel = new JPanel(new BorderLayout());
+            Dimension tableDim = new Dimension(1030, 350);
+            JPanel logPanel = new JPanel();
+            DefaultTableModel modelT = new NonEditableTableModel(LogsReader.getInformationArray(r.getMessages()), GeneralData.Columns);
+            logTable = new TableComponent(modelT);
+            logTable.getTable().setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
+            logTable.getTable().addMouseListener(this);
+            logTable.setSize(tableDim);
+            logPanel.add(logTable);
+            logPanel.setOpaque(true);
+            tablePanel.add(logPanel, BorderLayout.CENTER);
+            tablePanel.add(createMessagePanel(), BorderLayout.SOUTH);
+        }
+
         return tablePanel;
     }
     
     protected JPanel createMessagePanel(){
         msgPanel = new JPanel();
         msgArea = new JTextArea(15, 94);
+        msgArea.setEditable(false);
         JScrollPane msgAreaScroll = new JScrollPane(msgArea);
         msgPanel.add(msgAreaScroll);
         msgPanel.setOpaque(true);
