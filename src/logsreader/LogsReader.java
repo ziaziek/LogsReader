@@ -4,7 +4,7 @@
  */
 package logsreader;
 
-import gui.MainWindow;
+import gui.LogsReaderWindow;
 import gubas.javaapplication1.FormsCaller;
 import java.io.*;
 import java.util.Iterator;
@@ -60,12 +60,18 @@ public class LogsReader {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        MainWindow mw = new MainWindow();
+//    public static void main(String[] args) {
+//        LogsReaderWindow mw = new LogsReaderWindow();
+//            
+//            FormsCaller.callNewMainWindow("LogReader", mw);
+//    }
+    
+    public static void start(String logFileName){
+            LogsReaderWindow mw = new LogsReaderWindow(logFileName);
+            
             FormsCaller.callNewWindow("LogReader", mw);
     }
-    
-    
+
     public static String[][] getInformationArray(Queue<LogEntry> data) {
         //prepare basic array of information
         String[][] infos = new String[1][LogEntry.Columns.length];

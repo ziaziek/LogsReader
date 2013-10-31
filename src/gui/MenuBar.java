@@ -21,7 +21,7 @@ import misc.GeneralData;
 public class MenuBar extends JPanel {
     
     JMenuBar menuBar = null;
-    MainWindow parentFrame = null;
+    LogsReaderWindow parentFrame = null;
     JTextField txtLogSize = null;
     JLabel lblLogSize = null;
     JPanel spacer = new JPanel();
@@ -34,7 +34,7 @@ public class MenuBar extends JPanel {
         return curLvl;
     }
     
-    public MenuBar(MainWindow parentFrame){
+    public MenuBar(LogsReaderWindow parentFrame){
         this.parentFrame = parentFrame;
         menuBar = new JMenuBar();
         setLayout(new BorderLayout());

@@ -9,10 +9,16 @@ import gubas.components.TabbedPanelComponent;
 import gubas.components.TableComponent;
 import gubas.forms.BaseForm;
 import gubas.images.Images;
+import gubas.javaapplication1.FormsCaller;
+import gubas.management.interfaces.IWindow;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.Iterator;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -34,7 +40,7 @@ import org.jfree.data.category.CategoryDataset;
  *
  * @author Przemek
  */
-public class MainWindow extends BaseForm implements MouseListener{
+public class LogsReaderWindow extends BaseForm implements MouseListener, WindowListener{
     
     JPanel msgPanel = null;
     
@@ -60,16 +66,22 @@ public class MainWindow extends BaseForm implements MouseListener{
     
     String fileLocation = "";
     
-    public MainWindow(){
+    public LogsReaderWindow(){
+        this("");
+    }
+    
+    
+    public LogsReaderWindow(String fileName){
         super();
+        fileLocation = fileName;
         this.setPreferredSize(minStartDim);
         this.setMinimumSize(minStartDim);
         r = new LogsReader(fileLocation);//LogsReader.class.getResource("../tests/test.txt").getFile());
         add(new MenuBar(this), BorderLayout.NORTH);
         add(getTabPanel(), BorderLayout.CENTER);
         this.setResizable(false);
+        this.addWindowListener(this);
     }
-    
     public void loadData(String fileLocation){
         r = new LogsReader(fileLocation);
         refreshTableData(LogsReader.getInformationArray(r.getMessages()), LogEntry.Columns);
@@ -200,6 +212,41 @@ public class MainWindow extends BaseForm implements MouseListener{
     @Override
     public void mouseExited(MouseEvent e) {
         
+    }
+
+    @Override
+    public void windowOpened(WindowEvent we) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent we) {
+        
+    }
+
+    @Override
+    public void windowClosed(WindowEvent we) {
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent we) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent we) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent we) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent we) {
+
     }
     
 }
