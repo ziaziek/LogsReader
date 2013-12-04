@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package logsreader;
+package logsreader.logsreader;
 
-import gui.LogsReaderWindow;
+import logsreader.gui.LogsReaderWindow;
 import gubas.javaapplication1.FormsCaller;
 import java.io.*;
 import java.util.Iterator;
@@ -12,9 +12,9 @@ import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import misc.GeneralData;
-import misc.LogEntry;
-import misc.LogEntryFilter;
+import logsreader.misc.GeneralData;
+import logsreader.misc.LogEntry;
+import logsreader.misc.LogEntryFilter;
 
 /**
  *

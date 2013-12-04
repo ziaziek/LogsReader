@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui;
+package logsreader.gui;
 
 import gubas.forms.Dialog;
 import java.awt.BorderLayout;
@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
-import misc.GeneralData;
+import logsreader.misc.GeneralData;
 
 /**
  *

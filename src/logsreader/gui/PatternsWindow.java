@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui;
+package logsreader.gui;
 
 import gubas.forms.BaseForm;
 import gubas.forms.DialogForm;
@@ -23,7 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import misc.LogEntry;
+import logsreader.misc.LogEntry;
 
 /**
  *

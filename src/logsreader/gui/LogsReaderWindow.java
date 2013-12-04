@@ -2,19 +2,15 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui;
+package logsreader.gui;
 
 import gubas.components.NonEditableTableModel;
 import gubas.components.TabbedPanelComponent;
 import gubas.components.TableComponent;
 import gubas.forms.BaseForm;
 import gubas.images.Images;
-import gubas.javaapplication1.FormsCaller;
-import gubas.management.interfaces.IWindow;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
@@ -26,10 +22,10 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import misc.GeneralData;
-import logsreader.LogsReader;
-import misc.LogEntry;
-import misc.LogEntryFilter;
+import logsreader.misc.GeneralData;
+import logsreader.logsreader.LogsReader;
+import logsreader.misc.LogEntry;
+import logsreader.misc.LogEntryFilter;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.plot.PlotOrientation;

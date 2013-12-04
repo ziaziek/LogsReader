@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package logsreader;
+package logsreader.logsreader;
 
-import misc.LogEntry;
+import logsreader.misc.LogEntry;
 
 /**
  *

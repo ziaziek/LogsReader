@@ -3,8 +3,8 @@
  * and open the template in the editor.
  */
 
-import logsreader.LogsReader;
-import misc.GeneralData;
+import logsreader.logsreader.LogsReader;
+import logsreader.misc.GeneralData;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
